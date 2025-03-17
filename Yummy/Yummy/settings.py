@@ -11,6 +11,17 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+
+STATIC_URL = '/static/'
+
+# Додати для роботи зі статикою в режимі розробки
+STATICFILES_DIRS = [
+    os.path.join('./static/Yummy/styles.css', 'static'),
+    os.path.join('./static/Yummy/bootstrap.css', 'static'),
+    os.path.join('./static/Yummy/script.css', 'static'),
+    os.path.join('./static/Yummy/images', 'static'),
+]
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
