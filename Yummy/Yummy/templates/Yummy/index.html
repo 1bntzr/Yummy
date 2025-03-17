@@ -1,13 +1,175 @@
-<!doctype html>
+{% load static %}
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foods</title>
+    <link href="{% static 'Yummy/bootstrap.css' %}" rel="stylesheet" />
 
-</body>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'Yummy/styles.css' %}" />
+  </head>
+  <body>
+    <div class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Favorite</h5>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="modal-close btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <header>
+      <a href="#" class="logo"><i class="fas fa-utensils"></i>Yummy</a>
+      <nav class="navbar">
+        <a class="active" href="#home">Home</a>
+        <a href="dishes.html">Dishes</a>
+        <a href="about.html">About</a>
+        <a href="menu.html">Menu</a>
+        <a href="review.html">Review</a>
+        <a href="order.html">Order</a>
+      </nav>
+
+      <div class="icons">
+        <i class="fas fa-bars" id="bars"></i>
+        <i class="fas fa-search" id="search-icon"></i>
+        <a href="#" id="triggerModal" class="fas fa-heart"></a>
+        <a href="#" class="fas fa-shopping-cart"></a>
+      </div>
+    </header>
+
+    <form action="" id="search-form">
+      <input
+        type="search"
+        placeholder="search here..."
+        name=""
+        id="search-box"
+      />
+      <label for="search-box" class="fas fa-search"></label>
+      <i class="fas fa-times" id="close"></i>
+    </form>
+
+    <section class="home" id="home">
+      <div class="swiper-container home-slider">
+        <div class="swiper-wrapper wrapper">
+          <div class="swiper-slide slide">
+            <div class="content">
+              <span>our special dish</span>
+              <h3>bulgarian cuisine</h3>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet
+                repudiandae vero architecto.
+              </p>
+              <a href="order.html" class="btn">Order Now</a>
+            </div>
+            <div class="image">
+              <img
+                src="{% static 'Yummy/images/traditional-bulgarian-shopska-salad-with-tomatocucumber-bulgarian-sirene-cheese-isolated-white-background_123827-20753.jpg' %}"
+                alt="dish_img"
+              />
+            </div>
+          </div>
+
+          <div class="swiper-slide slide">
+            <div class="content">
+              <span>our special dish</span>
+              <h3>italian cuisine</h3>
+              <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Velit
+                quos dolores beatae.
+              </p>
+              <a href="order.html" class="btn">Order Now</a>
+            </div>
+            <div class="image">
+              <img
+                src="{% static 'Yummy/images/isolated-pizza-with-mushrooms-olives_219193-8149.avif' %}"
+                alt="dish_img"
+              />
+            </div>
+          </div>
+
+          <div class="swiper-slide slide">
+            <div class="content">
+              <span>our special dish</span>
+              <h3>japanese cuisine</h3>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
+                soluta mollitia odio.
+              </p>
+              <a href="order.html" class="btn">Order Now</a>
+            </div>
+            <div class="image">
+              <img
+                src="{% static 'Yummy/images/maki-sushi-isolated-on-white_2829-7304.avif' %}"
+                alt="dish_img"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </section>
+
+    <section class="footer">
+      <div class="box-container">
+        <div class="box">
+          <h3>locations</h3>
+          <a href="#">india</a>
+          <a href="#">japan</a>
+          <a href="#">ukraine</a>
+          <a href="#">USA</a>
+          <a href="#">france</a>
+        </div>
+
+        <div class="box">
+          <h3>quick links</h3>
+          <a href="#">home</a>
+          <a href="dishes.html">dishes</a>
+          <a href="about.html">about</a>
+          <a href="menu.html">menu</a>
+          <a href="review.html">review</a>
+          <a href="order.html">order</a>
+        </div>
+
+        <div class="box">
+          <h3>contact info</h3>
+          <a href="#">+999-999-9999</a>
+          <a href="#">+111-111-1111</a>
+          <a href="#">tastyfood@gmail.com</a>
+          <a href="#">orderfood@gmail.com</a>
+        </div>
+
+        <div class="box">
+          <h3>follow us</h3>
+          <a href="#">facebook</a>
+          <a href="#">twitter</a>
+          <a href="#">instagram</a>
+          <a href="#">linkedin</a>
+        </div>
+      </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="{% static 'Yummy/script.js' %}"></script>
+  </body>
 </html>
