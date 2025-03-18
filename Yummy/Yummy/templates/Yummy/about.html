@@ -18,14 +18,16 @@
   </head>
   <body>
     <header>
-      <a href="index.html" class="logo"><i class="fas fa-utensils"></i>Yummy</a>
+      <a href="{% url 'index' %}" class="logo"
+        ><i class="fas fa-utensils"></i>Yummy</a
+      >
       <nav class="navbar">
-        <a href="index.html">Home</a>
-        <a href="dishes.html">Dishes</a>
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'dishes' %}">Dishes</a>
         <a class="active" href="#about">About</a>
-        <a href="menu.html">Menu</a>
-        <a href="review.html">Review</a>
-        <a href="order.html">Order</a>
+        <a href="{% url 'menu' %}">Menu</a>
+        <a href="{% url 'review' %}">Review</a>
+        <a href="{% url 'order' %}">Order</a>
       </nav>
 
       <div class="icons">
@@ -99,12 +101,12 @@
 
         <div class="box">
           <h3>quick links</h3>
-          <a href="index.html">home</a>
-          <a href="dishes.html">dishes</a>
+          <a href="{% url 'index' %}">home</a>
+          <a href="{% url 'dishes' %}">dishes</a>
           <a href="#">about</a>
-          <a href="menu.html">menu</a>
-          <a href="review.html">review</a>
-          <a href="order.html">order</a>
+          <a href="{% url 'menu' %}">menu</a>
+          <a href="{% url 'review' %}">review</a>
+          <a href="{% url 'order' %}">order</a>
         </div>
 
         <div class="box">
