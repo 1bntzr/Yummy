@@ -184,6 +184,10 @@ header #bars {
   line-height: 1.5;
 }
 
+.swiper {
+  margin-top: 60px;
+}
+
 .swiper-pagination-bullet-active {
   background: var(--green);
 }
@@ -220,6 +224,8 @@ header #bars {
 }
 
 .dishes .box-container .box .fa-heart:hover,
+.dishes .box-container .box .fa-heart.active,
+.dishes .box-container .box .fa-eye.active,
 .dishes .box-container .box .fa-eye:hover {
   background: var(--green);
   color: #fff;
@@ -372,7 +378,8 @@ header #bars {
   transition: all 0.2s linear;
 }
 
-.menu .box-container .box .image .fa-heart:hover {
+.menu .box-container .box .image .fa-heart:hover, 
+.menu .box-container .box .image .fa-heart.active {
   background-color: var(--green);
   color: #fff;
 }
@@ -637,7 +644,7 @@ header #bars {
 
 @media (max-width: 450px) {
   html {
-    font-size: 5%;
+    font-size: 50%;
   }
 
   .dishes .box-container .box img {
