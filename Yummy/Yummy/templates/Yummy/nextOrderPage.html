@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foods</title>
+    <link href="{% static 'Yummy/bootstrap.css' %}" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'Yummy/styles.css' %}" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <a href="{% url 'index' %}" class="logo"
+          ><i class="fas fa-utensils"></i>Yummy</a
+        >
+        <nav class="menu">
+          <a href="{% url 'index' %}">Home</a>
+          <a href="{% url 'dishes' %}">Dishes</a>
+          <a href="{% url 'about' %}">About</a>
+          <a href="{% url 'menu' %}">Menu</a>
+          <a href="{% url 'review' %}">Review</a>
+          <a class="active" href="{% url 'order' %}">Order</a>
+        </nav>
+
+        <div class="icons">
+          <i class="fas fa-bars" id="bars"></i>
+          <a href="#" id="triggerModal" class="fas fa-heart"></a>
+          <a href="#" class="fas fa-shopping-cart"></a>
+        </div>
+      </header>
+      <main class="main">
+        <div class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Favorite</h5>
+              </div>
+              <div class="modal-body"></div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="modal-close btns"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <section class="order" id="order">
+          <h1 class="heading">free and fast</h1>
+          <p>
+            Hello <span id="first-name"></span>! Your order has been accepted
+            and registered to the number: <span id="number"></span>. Expect
+            delivery to the address: <span id="address"></span>.
+          </p>
+          <p>At: <span id="date"></span>.</p>
+          <p>
+            Your order contains: <span id="orders"></span>. And additional:
+            <span id="additional"></span>. Total number of dishes in order:
+            <span id="number-of-orders"></span>.
+          </p>
+          <p>Your comment to the order: <span id="message"></span>.</p>
+          <p>Thank you for choosing us!</p>
+
+          <div class="orderA">
+            <a href="{% url 'index' %}" class="btns">return to the home page</a>
+          </div>
+        </section>
+      </main>
+      <footer class="footer">
+        <div class="box-container">
+          <div class="box">
+            <h3>locations</h3>
+            <a href="#">india</a>
+            <a href="#">japan</a>
+            <a href="#">ukraine</a>
+            <a href="#">USA</a>
+            <a href="#">france</a>
+          </div>
+
+          <div class="box">
+            <h3>quick links</h3>
+            <a href="{% url 'index' %}">home</a>
+            <a href="{% url 'dishes' %}">dishes</a>
+            <a href="{% url 'about' %}">about</a>
+            <a href="{% url 'menu' %}">menu</a>
+            <a href="{% url 'review' %}">review</a>
+            <a href="#">order</a>
+          </div>
+
+          <div class="box">
+            <h3>contact info</h3>
+            <a href="#">+999-999-9999</a>
+            <a href="#">+111-111-1111</a>
+            <a href="#">tastyfood@gmail.com</a>
+            <a href="#">orderfood@gmail.com</a>
+          </div>
+
+          <div class="box">
+            <h3>follow us</h3>
+            <a href="#">facebook</a>
+            <a href="#">twitter</a>
+            <a href="#">instagram</a>
+            <a href="#">linkedin</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="{% static 'Yummy/script.js' %}"></script>
+  </body>
+</html>
