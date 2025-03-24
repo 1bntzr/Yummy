@@ -7,6 +7,23 @@
   --box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
 }
 
+h3 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+
+.price {
+  font-size: 16px;
+}
+
+.box-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 * {
   font-family: 'Montserrat', sans-serif;
   margin: 0;
@@ -16,10 +33,16 @@
   outline: none;
   border: none;
   text-transform: capitalize;
-  transition: all 0.2s linear;
+}
+
+body {
+  height: 100%;
+  margin: 0;
 }
 
 html {
+  height: 100%;
+  margin: 0;
   font-size: 62.5%;
   overflow-x: hidden;
   scroll-padding-top: 5.5rem;
@@ -28,10 +51,6 @@ html {
 
 section {
   padding: 2rem 9%;
-}
-
-section:nth-child(even) {
-  background: #eee;
 }
 
 .sub-heading {
@@ -47,9 +66,10 @@ section:nth-child(even) {
   font-size: 3rem;
   padding-bottom: 2rem;
   text-transform: uppercase;
+  margin-top: 6.5rem;
 }
 
-.btn {
+.btns {
   margin-top: 1rem;
   display: inline-block;
   font-size: 1.7rem;
@@ -58,9 +78,10 @@ section:nth-child(even) {
   border-radius: 0.5rem;
   cursor: pointer;
   padding: 0.8rem 3rem;
+  transition: all 0.2s linear;
 }
 
-.btn:hover {
+.btns:hover {
   background: var(--green);
   letter-spacing: 0.1rem;
 }
@@ -90,14 +111,15 @@ header .logo i {
   margin-right: 5px;
 }
 
-header .navbar a {
+header .menu a {
   font-size: 1.7rem;
   padding: 0.5rem;
   color: var(--light-color);
+  transition: all 0.2s linear;
 }
 
-header .navbar a.active,
-header .navbar a:hover {
+header .menu a.active,
+header .menu a:hover {
   color: var(--green);
 }
 
@@ -112,6 +134,7 @@ header .icons a {
   font-size: 1.7rem;
   color: var(--black);
   border-radius: 50%;
+  transition: all 0.2s linear;
 }
 
 header .icons i:hover,
@@ -124,67 +147,12 @@ header #bars {
   display: none;
 }
 
-#search-form {
-  position: fixed;
-  top: -110%;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  z-index: 1004;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 1rem;
-}
-
-#search-form.active {
-  top: 0;
-}
-
-#search-form #search-box {
-  width: 50rem;
-  border-bottom: 0.1rem solid #fff;
-  padding: 1rem 0;
-  color: #fff;
-  font-size: 3rem;
-  text-transform: none;
-  background: none;
-}
-
-#search-form #search-box::placeholder {
-  color: #eee 0.5;
-}
-
-#search-form #search-box::-webkit-search-cancel-button {
-  -webkit-appearance: none;
-}
-
-#search-form label {
-  color: #fff;
-  cursor: pointer;
-  font-size: 3rem;
-}
-
-#search-form label:hover {
-  color: var(--green);
-}
-
-#search-form #close {
-  position: absolute;
-  color: #fff;
-  cursor: pointer;
-  top: 2rem;
-  right: 3rem;
-  font-size: 5rem;
-}
-
 .home .home-slider .slide {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 2rem;
-  padding-top: 9rem;
+  min-width: 0;
 }
 
 .home .home-slider .slide .content {
@@ -226,10 +194,6 @@ header #bars {
   gap: 1.5rem;
 }
 
-.dishes .heading {
-  margin-top: 3.5rem;
-}
-
 .dishes .box-container .box {
   padding: 2.5rem;
   background: #fff;
@@ -252,6 +216,7 @@ header #bars {
   line-height: 5rem;
   font-size: 2rem;
   color: var(--black);
+  transition: all 0.2s linear;
 }
 
 .dishes .box-container .box .fa-heart:hover,
@@ -299,10 +264,6 @@ header #bars {
   font-weight: bolder;
   margin-right: 1rem;
   font-size: 2.5rem;
-}
-
-.about .heading {
-  margin-top: 3.5rem;
 }
 
 .about .row {
@@ -369,10 +330,6 @@ header #bars {
   color: var(--black);
 }
 
-.menu .heading {
-  margin-top: 3.5rem;
-}
-
 .menu .box-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
@@ -412,6 +369,7 @@ header #bars {
   background: #fff;
   border-radius: 50%;
   color: var(--black);
+  transition: all 0.2s linear;
 }
 
 .menu .box-container .box .image .fa-heart:hover {
@@ -449,10 +407,6 @@ header #bars {
   color: var(--green);
   margin-left: 1rem;
   font-size: 2.5rem;
-}
-
-.review .heading {
-  margin-top: 3.5rem;
 }
 
 .review .slide {
@@ -500,10 +454,6 @@ header #bars {
   font-size: 1.5rem;
   line-height: 1.8;
   color: var(--light-color);
-}
-
-.order .heading {
-  margin-top: 3.5rem;
 }
 
 .order .orderA {
@@ -562,7 +512,7 @@ header #bars {
   resize: none;
 }
 
-.order form .btn {
+.order form .btns {
   margin-top: 0;
 }
 
@@ -575,6 +525,11 @@ header #bars {
 
 .order span {
   color: var(--green);
+}
+
+.footer {
+  background: #eee;
+  padding: 2rem 9%;
 }
 
 .footer .box-container {
@@ -594,6 +549,7 @@ header #bars {
   padding: 0.5rem 0;
   font-size: 1.5rem;
   color: var(--light-color);
+  transition: all 0.2s linear;
 }
 
 .footer .box-container .box a:hover {
@@ -637,7 +593,7 @@ header #bars {
     display: inline-block;
   }
 
-  header .navbar {
+  header .menu {
     position: absolute;
     top: 100%;
     left: 0;
@@ -649,11 +605,11 @@ header #bars {
     clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
   }
 
-  header .navbar.active {
+  header .menu.active {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
   }
 
-  header .navbar a {
+  header .menu a {
     display: block;
     padding: 1.5rem;
     margin: 1rem;
@@ -662,15 +618,10 @@ header #bars {
     border-radius: 10px;
   }
 
-  header .navbar a.active,
-  header .navbar a:hover {
+  header .menu a.active,
+  header .menu a:hover {
     color: #fff;
     background: var(--green);
-  }
-
-  #search-form #search-box {
-    width: 90%;
-    margin: 0 1rem;
   }
 
   .home .home-slider .slide .content h3 {
@@ -697,4 +648,15 @@ header #bars {
   .order form .inputBox .input {
     width: 100%;
   }
+}
+
+.wrapper {
+  min-height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1 1 auto;
 }

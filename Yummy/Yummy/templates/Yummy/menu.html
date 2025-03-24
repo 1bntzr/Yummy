@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,147 +6,57 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Foods</title>
-
+    <link href="{% static 'Yummy/bootstrap.css' %}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{% static 'Yummy/styles.css' %}" />
 </head>
-<body>
+<body data-page="menu">
+  <div class="wrapper">
     <header>
-        <a href="index.html" class="logo"><i class="fas fa-utensils"></i>Yummy</a>
-    <nav class="navbar">
-        <a href="index.html">Home</a>
-        <a href="dishes.html">Dishes</a>
-        <a href="about.html">About</a>
-        <a class="active" href="#">Menu</a>
-        <a href="review.html">Review</a>
-        <a href="order.html">Order</a>
-    </nav>
+      <a href="{% url 'index' %}" class="logo"><i class="fas fa-utensils"></i>Yummy</a>
+  <nav class="menu">
+      <a href="{% url 'index' %}">Home</a>
+      <a href="{% url 'dishes' %}">Dishes</a>
+      <a href="{% url 'about' %}">About</a>
+      <a class="active" href="#">Menu</a>
+      <a href="{% url 'review' %}">Review</a>
+      <a href="{% url 'order' %}">Order</a>
+  </nav>
 
-    <div class="icons">
-        <i class="fas fa-bars" id="bars"></i>
-        <i class="fas fa-search" id="search-icon"></i>
-        <a href="#" class="fas fa-heart"></a>
-        <a href="#" class="fas fa-shopping-cart"></a>
-    </div>
-    
+  <div class="icons">
+      <i class="fas fa-bars" id="bars"></i>
+      <a href="#" id="triggerModal" class="fas fa-heart"></a>
+      <a href="#" class="fas fa-shopping-cart"></a>
+  </div>
+  
     </header>
-
-    <form action="" id="search-form">
-        <input type="search" placeholder="search here..." name="" id="search-box">
-        <label for="search-box" class="fas fa-search"></label>
-        <i class="fas fa-times" id="close"></i>
-    </form>
-
-    
-    <section class="menu" id="menu">
-
-        <h3 class="sub-heading"> our menu </h3>
-        <h1 class="heading"> today's speciality </h1>
-
-        <div class="box-container">
-            <div class="box">
-                <div class="image">
-                    <img src="images/hawaiian-salmon-fish-poke-bowl-with-rice-radish-cucumber-tomato-sesame-seeds-seaweeds-buddha-bowl-diet-food.jpg" alt="" height="200px" width="250px">
-                    <a href="#" class="fas fa-heart"></a>
-                </div>
-                <div class="content">
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <h3>delicious food</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquam, commodi.</p>
-                    <a href="#" class="btn">add to cart</a>
-                    <span class="pice">$18.00</span>
-                </div>
+    <main class="main">
+      <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Favorite</h5>
             </div>
-
-            <div class="box">
-                <div class="image">
-                    <img src="images/fried-potatoes-french-fries-isolated-white-background.jpg" alt="" height="200px" width="200px">
-                    <a href="#" class="fas fa-heart"></a>
-                </div>
-                <div class="content">
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <h3>delicious food</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquam, commodi.</p>
-                    <a href="#" class="btn">add to cart</a>
-                    <span class="pice">$18.00</span>
-                </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="modal-close btns"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
             </div>
-
-            <div class="box">
-                <div class="image">
-                    <img src="images/maki-sushi-isolated-on-white_2829-7304.avif" alt="" height="200px" width="200px">
-                    <a href="#" class="fas fa-heart"></a>
-                </div>
-                <div class="content">
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <h3>delicious food</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquam, commodi.</p>
-                    <a href="#" class="btn">add to cart</a>
-                    <span class="pice">$18.00</span>
-                </div>
-            </div>
-
-            <div class="box">
-                <div class="image">
-                    <img src="images/baked-chicken-wings-with-teriyaki-sauce.jpg" height="200px" width="250px">
-                    <a href="#" class="fas fa-heart"></a>
-                </div>
-                <div class="content">
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <h3>delicious food</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquam, commodi.</p>
-                    <a href="#" class="btn">add to cart</a>
-                    <span class="pice">$18.00</span>
-                </div>
-            </div>
-
-            <div class="box">
-                <div class="image">
-                    <img src="images/mexican-tacos-with-chicken-bell-peppers-black-beans-fresh-vegetables_2829-20049.jpg" height="200px" width="250px">
-                    <a href="#" class="fas fa-heart"></a>
-                </div>
-                <div class="content">
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <h3>delicious food</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquam, commodi.</p>
-                    <a href="#" class="btn">add to cart</a>
-                    <span class="pice">$18.00</span>
-                </div>
-            </div>
-    </section>
-
-    <section class="footer">
+          </div>
+        </div>
+      </div>
+      <section class="menu" id="menu">
+          <h1 class="heading"> today's speciality </h1>
+          <div class="box-container" id="wrapper-products">
+      </section>
+    </main>
+    <footer class="footer">
 
         <div class="box-container">
 
@@ -160,12 +71,12 @@
 
             <div class="box">
                 <h3>quick links</h3>
-                <a href="index.html">home</a>
-                <a href="dishes.html">dishes</a>
-                <a href="about.html">about</a>
+                <a href="{% url 'index' %}">home</a>
+                <a href="{% url 'dishes' %}">dishes</a>
+                <a href="{% url 'about' %}">about</a>
                 <a href="#">menu</a>
-                <a href="review.html">review</a>
-                <a href="review.html">order</a>
+                <a href="{% url 'review' %}">review</a>
+                <a href="{% url 'review' %}">order</a>
             </div>
 
             <div class="box">
@@ -184,10 +95,9 @@
                 <a href="#">linkedin</a>
             </div>
         </div>
-    </section>
-
+    </footer>
+  </div> 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-<script src="script.js"></script>
+<script src="{% static 'Yummy/script.js' %}"></script>
 </body>
 </html>
