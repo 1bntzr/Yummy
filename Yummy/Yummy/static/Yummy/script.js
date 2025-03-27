@@ -119,25 +119,25 @@ function cards() {
 
     function getTemplateProducts() {
         return [
-            { id: 1, title: 'Tasty food', page: 'dishes', favorite: false, img: '/static/Yummy/images/burger-removebg-preview-removebg-preview.png', price: '10.00', },
-            { id: 2, title: 'Tasty food', page: 'dishes', favorite: false, img: '/static/Yummy/images/chicken-nuggets-1.png', price: '20.00', },
-            { id: 3, title: 'Tasty food', page: 'dishes', favorite: false, img: '/static/Yummy/images/pngtree-pizza-pepperoni-png-image_9057057.png', price: '16.00', },
-            { id: 4, title: 'Tasty food', page: 'dishes', favorite: false, img: '/static/Yummy/images/fried-potatoes-french-fries-isolated-white-background.jpg', price: '17.00', },
-            { id: 5, title: 'Tasty food', page: 'dishes', favorite: false, img: '/static/Yummy/images/ramen.png', price: '21.99', },
-            { id: 6, title: 'Tasty food', page: 'dishes', favorite: false, img: '/static/Yummy/images/fried-chicken-french-fries-white-plate.jpg', price: '10.00', },
-            { id: 7, title: 'delicious food', page: 'menu', favorite: false, img: '/static/Yummy/images/hawaiian-salmon-fish-poke-bowl-with-rice-radish-cucumber-tomato-sesame-seeds-seaweeds-buddha-bowl-diet-food.jpg', price: '18.00', },
-            { id: 8, title: 'delicious food', page: 'menu', favorite: false, img: '/static/Yummy/images/fried-potatoes-french-fries-isolated-white-background.jpg', price: '18.00', },
-            { id: 9, title: 'delicious food', page: 'menu', favorite: false, img: '/static/Yummy/images/maki-sushi-isolated-on-white_2829-7304.avif', price: '18.00', },
-            { id: 10, title: 'delicious food', page: 'menu', favorite: false, img: '/static/Yummy/images/baked-chicken-wings-with-teriyaki-sauce.jpg', price: '18.00', },
-            { id: 11, title: 'delicious food', page: 'menu', favorite: false, img: '/static/Yummy/images/mexican-tacos-with-chicken-bell-peppers-black-beans-fresh-vegetables_2829-20049.jpg', price: '18.00', },
+            { id: 1, title: 'Tasty food', page: 'dishes', favorite: false, viewed: false, img: '/static/Yummy/images/burger-removebg-preview-removebg-preview.png', price: '10.00', },
+            { id: 2, title: 'Tasty food', page: 'dishes', favorite: false, viewed: false, img: '/static/Yummy/images/chicken-nuggets-1.png', price: '20.00', },
+            { id: 3, title: 'Tasty food', page: 'dishes', favorite: false, viewed: false, img: '/static/Yummy/images/pngtree-pizza-pepperoni-png-image_9057057.png', price: '16.00', },
+            { id: 4, title: 'Tasty food', page: 'dishes', favorite: false, viewed: false, img: '/static/Yummy/images/fried-potatoes-french-fries-isolated-white-background.jpg', price: '17.00', },
+            { id: 5, title: 'Tasty food', page: 'dishes', favorite: false, viewed: false, img: '/static/Yummy/images/ramen.png', price: '21.99', },
+            { id: 6, title: 'Tasty food', page: 'dishes', favorite: false, viewed: false, img: '/static/Yummy/images/fried-chicken-french-fries-white-plate.jpg', price: '10.00', },
+            { id: 7, title: 'delicious food', page: 'menu', favorite: false, viewed: false, img: '/static/Yummy/images/hawaiian-salmon-fish-poke-bowl-with-rice-radish-cucumber-tomato-sesame-seeds-seaweeds-buddha-bowl-diet-food.jpg', price: '18.00', },
+            { id: 8, title: 'delicious food', page: 'menu', favorite: false, viewed: false, img: '/static/Yummy/images/fried-potatoes-french-fries-isolated-white-background.jpg', price: '18.00', },
+            { id: 9, title: 'delicious food', page: 'menu', favorite: false, viewed: false, img: '/static/Yummy/images/maki-sushi-isolated-on-white_2829-7304.avif', price: '18.00', },
+            { id: 10, title: 'delicious food', page: 'menu', favorite: false, viewed: false, img: '/static/Yummy/images/baked-chicken-wings-with-teriyaki-sauce.jpg', price: '18.00', },
+            { id: 11, title: 'delicious food', page: 'menu', favorite: false, viewed: false, img: '/static/Yummy/images/mexican-tacos-with-chicken-bell-peppers-black-beans-fresh-vegetables_2829-20049.jpg', price: '18.00', },
         ]
     }
 
     function getTemplateForDishes(card) {
         return `
             <div class="box" style="${body !== card.page ? 'display: none;' : ''}">
-                <a href="#" id="heart" data-id="${card.id}" class="fas fa-heart"></a>
-                <a href="#" class="fas fa-eye"></a>
+                <a href="#" id="heart" data-id="${card.id}" class="fas fa-heart heart-icon"></a>
+                <a href="#" data-id="${card.id}" class="fas fa-eye eye-icon ${card.viewed ? 'active' : ''}"></a>
                 <img
                     src="${card.img}"
                     alt=""
@@ -164,7 +164,7 @@ function cards() {
             <div class="box" style="${body !== card.page ? 'display: none;' : ''}">
                 <div class="image">
                     <img src="${card.img}" alt="" height="200px" width="250px">
-                    <a href="#" data-id="${card.id}" class="fas fa-heart"></a>
+                    <a href="#" data-id="${card.id}" class="fas fa-heart heart-icon"></a>
                 </div>
                 <div class="content">
                     <div class="stars">
@@ -188,6 +188,12 @@ function cards() {
     let products = localStorage.getItem('cards');
     if (products !== null) {
         products = JSON.parse(products);
+        products = products.map(product => {
+            if (product.viewed === undefined) {
+                return {...product, viewed: false};
+            }
+            return product;
+        });
     } else {
         products = getTemplateProducts();
     }
@@ -202,28 +208,52 @@ function cards() {
     }
     const prod = products.map(template)
 
-    try {
-        wrapper.innerHTML = prod.join('')
-        wrapper.addEventListener('click', (e) => {
-            e.preventDefault()
-            const target = e.target
-            if (target.classList.contains('fa-heart')) {
-                const id = parseInt(target.getAttribute('data-id'))
-                let products = localStorage.getItem('cards');
-                if (products !== null) {
-                    products = JSON.parse(products);
-                    const product = products.find(item => item.id === id)
-                    product.favorite = !product.favorite
-                    localStorage.setItem('cards', JSON.stringify(products))
-                } else {
-                    products = getTemplateProducts();
-                    const product = products.find(item => item.id === id)
-                    product.favorite = !product.favorite
-                    localStorage.setItem('cards', JSON.stringify(products))
-                }
+try {
+    wrapper.innerHTML = prod.join('')
+    wrapper.addEventListener('click', (e) => {
+        e.preventDefault()
+        const target = e.target
+        
+        if (target.classList.contains('heart-icon')) {
+            const id = parseInt(target.getAttribute('data-id'))
+            let products = localStorage.getItem('cards');
+            if (products !== null) {
+                products = JSON.parse(products);
+                const product = products.find(item => item.id === id)
+                product.favorite = !product.favorite
+                localStorage.setItem('cards', JSON.stringify(products))
+                target.classList.toggle('active');
+            } else {
+                products = getTemplateProducts();
+                const product = products.find(item => item.id === id)
+                product.favorite = !product.favorite
+                localStorage.setItem('cards', JSON.stringify(products))
+                target.classList.toggle('active');
             }
-        })
-    } catch (e) { }
+        }
+        
+        if (target.classList.contains('eye-icon')) {
+            const id = parseInt(target.getAttribute('data-id'))
+            let products = localStorage.getItem('cards');
+            if (products !== null) {
+                products = JSON.parse(products);
+                if (!products.some(item => item.hasOwnProperty('viewed'))) {
+                    products = products.map(item => ({...item, viewed: false}));
+                }
+                const product = products.find(item => item.id === id)
+                product.viewed = !product.viewed
+                localStorage.setItem('cards', JSON.stringify(products))
+                target.classList.toggle('active');
+            } else {
+                products = getTemplateProducts();
+                const product = products.find(item => item.id === id)
+                product.viewed = !product.viewed
+                localStorage.setItem('cards', JSON.stringify(products))
+                target.classList.toggle('active');
+            }
+        }
+    })
+} catch (e) { }
 
 }
 cards()
@@ -279,6 +309,15 @@ function favorite() {
                 const product = products.find(item => item.id === id)
                 product.favorite = !product.favorite
                 localStorage.setItem('cards', JSON.stringify(products))
+
+                const heartIcons = document.querySelectorAll(`.heart-icon[data-id="${id}"]`);
+                heartIcons.forEach(icon => {
+                    if (product.favorite) {
+                        icon.classList.add('active');
+                    } else {
+                        icon.classList.remove('active');
+                    }
+                });
                 renderFavorite()
             }
 
@@ -286,3 +325,44 @@ function favorite() {
     })
 }
 favorite()
+
+function updateHeartIcons() {
+    let products = localStorage.getItem('cards');
+    if (products !== null) {
+        products = JSON.parse(products);
+        
+        const heartIcons = document.querySelectorAll('.heart-icon');
+        heartIcons.forEach(icon => {
+            const id = parseInt(icon.getAttribute('data-id'));
+            const product = products.find(item => item.id === id);
+            if (product && product.favorite) {
+                icon.classList.add('active');
+            } else {
+                icon.classList.remove('active');
+            }
+        });
+
+        const eyeIcons = document.querySelectorAll('.eye-icon');
+        eyeIcons.forEach(icon => {
+            const id = parseInt(icon.getAttribute('data-id'));
+            const product = products.find(item => item.id === id);
+            
+            if (product && product.viewed) {
+                icon.classList.add('active');
+            } else {
+                icon.classList.remove('active');
+            }
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    updateHeartIcons();
+    
+    document.addEventListener('click', function(event) {
+        if (event.target.classList.contains('heart-icon') || 
+            event.target.classList.contains('eye-icon')) {
+            event.preventDefault();
+        }
+    });
+});
