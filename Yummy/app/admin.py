@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import Dish, Order, Review
 
-# Register your models here.
+admin.site.register(Dish)
+admin.site.register(Order)
+admin.site.register(Review)

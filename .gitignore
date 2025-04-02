@@ -1,0 +1,8 @@
+# Файлы окружения
+.env
+.env.local
+.env*.local
+
+# Pycharm/VScode
+.idea/
+.vscode/
