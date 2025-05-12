@@ -305,7 +305,7 @@ function updateProductCounter(productId, count) {
 function fillingForm() {
     const orders = document.querySelector('#orders')
     const numberOfOrders = document.querySelector('#numberOfOrders')
-    if (!orders && !numberOfOrders) return
+    if (!orders || !numberOfOrders) return
 
     const value = []
     const products = getProducts()
@@ -322,10 +322,58 @@ function fillingForm() {
 }
 
 
+function form() {
+    const forms = document.querySelectorAll('form')
+
+    async function postData(url, data) {
+        const response = await fetch(url, {
+            method: 'POST',
+            body: data
+        })
+
+        return await response.json()
+    }
+
+    const message = {
+        loading: 'loading...',
+        fail: 'Something went wrong'
+    }
+
+    forms.forEach(form => {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault()
+
+            const div = document.createElement('div')
+            div.textContent = message.loading
+            div.style.cssText = `
+                text-align: center;
+                font-size: 16px;
+            `
+            const lastElement = form.lastElementChild
+            lastElement.before(div)
+
+
+            const formData = new FormData(form)
+            postData('http://127.0.0.1:8000/api/items/', formData).then(() => {
+                window.location.href = '/nextorderpage/'
+            }).catch(() => {
+                div.textContent = message.fail
+                div.style.color = 'red'
+            }).finally(() => {
+                setTimeout(() => {
+                    div.remove()
+                }, 5000)
+            })
+
+        })
+
+    })
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     modals();
     renderCards();
     initCounter('.modal-body')
     fillingForm()
+    form()
 });
