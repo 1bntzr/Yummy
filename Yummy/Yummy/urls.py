@@ -16,23 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from . import views
-from .views import dishes
-from .views import about
-from .views import menu
-from .views import next_order_page
-from .views import order
-from .views import review
-from .views import index
+
+from app.views import IndexView, AboutView, DishesListView, MenuListView, NextOrderPageView, OrderCreateView, \
+    ReviewCreateView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index, name='index'),
-    path('about/', about, name='about'),
-    path('dishes/', dishes, name='dishes'),
-    path('menu/', menu, name='menu'),
-    path('nextorderpage/', next_order_page, name='next_order_page'),
-    path('order/', order ,name="order"),
-    path('review/', review ,name="review")
+    path('', IndexView.as_view(), name='index'),
+    path('about/', AboutView.as_view(), name='about'),
+    path('dishes/', DishesListView.as_view(), name='dishes'),
+    path('menu/', MenuListView.as_view(), name='menu'),
+    path('nextorderpage/', NextOrderPageView.as_view(), name='next_order_page'),
+    path('order/', OrderCreateView.as_view(), name='order'),
+    path('review/', ReviewCreateView.as_view(), name='review')
 ]
