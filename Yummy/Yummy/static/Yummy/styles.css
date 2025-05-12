@@ -4,6 +4,7 @@
   --green: #27ae60;
   --black: #192a56;
   --light-color: #666;
+  --red: #9b0606;
   --box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
 }
 
@@ -16,12 +17,6 @@ h5 {
 
 .price {
   font-size: 16px;
-}
-
-.box-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
 * {
@@ -378,7 +373,7 @@ header #bars {
   transition: all 0.2s linear;
 }
 
-.menu .box-container .box .image .fa-heart:hover, 
+.menu .box-container .box .image .fa-heart:hover,
 .menu .box-container .box .image .fa-heart.active {
   background-color: var(--green);
   color: #fff;
@@ -643,6 +638,10 @@ header #bars {
 }
 
 @media (max-width: 450px) {
+  h3 {
+    font-size: 14px;
+  }
+
   html {
     font-size: 50%;
   }
@@ -655,6 +654,10 @@ header #bars {
   .order form .inputBox .input {
     width: 100%;
   }
+
+  .price {
+    font-size: 14px;
+  }
 }
 
 .wrapper {
@@ -666,4 +669,98 @@ header #bars {
 
 .main {
   flex: 1 1 auto;
+}
+
+.total {
+  font-size: 2rem;
+  line-height: 41px;
+}
+
+.modal-close {
+  margin-top: 0;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.box-column {
+  flex: 0 1 25%;
+}
+
+.box-counter {
+  column-gap: 6%;
+}
+
+.btn-minus {
+  background: var(--red);
+}
+
+.btn-plus {
+  background: var(--green);
+}
+
+.btn {
+  display: inline-block;
+  font-size: 1.7rem;
+  color: #fff;
+  border-radius: 0.5rem;
+  padding: 0.8rem 10%;
+  cursor: pointer;
+}
+
+.btn-delete {
+  background: var(--black);
+  transition: all 0.2s linear;
+}
+
+.btn-delete:hover {
+  background: var(--red);
+}
+
+.counter {
+  font-size: 2rem;
+}
+
+.btn-order {
+  background: var(--green);
+  padding: 0 10px;
+}
+
+.modal-close {
+  background: var(--black);
+  transition: all 0.2s linear;
+  padding: 0 10px;
+}
+
+.modal-close:hover {
+  background: var(--red);
+}
+
+.wrapper-button {
+  display: flex;
+}
+
+@media (max-width: 375px) {
+  .box-column img {
+    width: 90px;
+  }
+
+  .btn-order {
+    padding: 0 5px;
+  }
+
+  .modal-close {
+    background: var(--black);
+    transition: all 0.2s linear;
+    padding: 0 5px;
+  }
 }

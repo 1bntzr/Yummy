@@ -26,8 +26,7 @@
 
   <div class="icons">
       <i class="fas fa-bars" id="bars"></i>
-      <a href="#" id="triggerModal" class="fas fa-heart"></a>
-      <a href="#" class="fas fa-shopping-cart"></a>
+      <a href="#" id="triggerModal" class="fas fa-shopping-cart"></a>
   </div>
   
     </header>
@@ -36,17 +35,23 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Favorite</h5>
+              <h5 class="modal-title">Basket</h5>
             </div>
             <div class="modal-body"></div>
             <div class="modal-footer">
-              <button
-                type="button"
-                class="modal-close btns"
-                data-dismiss="modal"
-              >
-                Close
-              </button>
+              <div class="total"></div>
+              <div class="wrapper-button">
+                <button type=" button" class="btn btn-order">
+                  Place an order
+                </button>
+                <button
+                  type="button"
+                  class="modal-close btn"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>
