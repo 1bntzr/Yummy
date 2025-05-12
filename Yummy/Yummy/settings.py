@@ -27,6 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+load_dotenv()
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -63,7 +64,7 @@ ROOT_URLCONF = 'Yummy.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'Yummy/app/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -131,10 +132,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-    os.path.join('./static/Yummy/styles.css', 'static'),
-    os.path.join('./static/Yummy/bootstrap.css', 'static'),
-    os.path.join('./static/Yummy/script.css', 'static'),
-    os.path.join('./static/Yummy/images', 'static'),
+    os.path.join(BASE_DIR, 'app', 'static', 'Yummy')
 ]
 
 # Default primary key field type
