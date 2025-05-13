@@ -354,7 +354,7 @@ function form() {
 
 
             const formData = new FormData(form)
-            postData('http://127.0.0.1:8000/api/items/', formData).then(() => {
+            postData('http://127.0.0.1:8000/app/items/', formData).then(() => {
                 window.location.href = '/nextorderpage/'
             }).catch(() => {
                 div.textContent = message.fail
@@ -370,10 +370,199 @@ function form() {
     })
 }
 
+function validateForm() {
+    const firstName = document.getElementById('firstName');
+    const number = document.getElementById('number');
+    const orders = document.getElementById('orders');
+    const numberOfOrders = document.getElementById('numberOfOrders');
+    const date = document.getElementById('date');
+    const address = document.getElementById('address');
+    
+    removeAllErrors();
+    
+    let isValid = true;
+
+    if (!firstName.value.trim()) {
+        showError(firstName, 'Name is required');
+        isValid = false;
+    } else if (!/^[A-Za-z\s]+$/.test(firstName.value.trim())) {
+        showError(firstName, 'Name should contain only letters');
+        isValid = false;
+    }
+
+    if (!number.value.trim()) {
+        showError(number, 'Phone number is required');
+        isValid = false;
+    } else if (!/^\d{10,15}$/.test(number.value.replace(/\D/g, ''))) {
+        showError(number, 'Please enter a valid phone number (10 digits)');
+        isValid = false;
+    }
+
+    if (!orders.value.trim()) {
+        showError(orders, 'Please select at least one food item');
+        isValid = false;
+    }
+
+    if (!numberOfOrders.value.trim()) {
+        showError(numberOfOrders, 'Number of orders is required');
+        isValid = false;
+    } else if (numberOfOrders.value <= 0) {
+        showError(numberOfOrders, 'Number of orders must be positive');
+        isValid = false;
+    }
+
+    if (!date.value) {
+        showError(date, 'Date and time are required');
+        isValid = false;
+    } else {
+        const selectedDate = new Date(date.value);
+        const now = new Date();
+        
+        if (selectedDate <= now) {
+            showError(date, 'Please select a future date and time');
+            isValid = false;
+        }
+    }
+
+    if (!address.value.trim()) {
+        showError(address, 'Address is required');
+        isValid = false;
+    }
+    
+    return isValid;
+}
+
+function showError(inputElement, message) {
+    const parentDiv = inputElement.parentElement;
+
+    let errorElement = parentDiv.querySelector('.error-message');
+    if (!errorElement) {
+        errorElement = document.createElement('div');
+        errorElement.className = 'error-message';
+        errorElement.style.cssText = `
+            color:rgb(225, 50, 50);
+            margin-top: -4px;
+            margin-left: 3px;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        `;
+        parentDiv.appendChild(errorElement);
+    }
+    
+    errorElement.textContent = message;
+
+    inputElement.style.borderColor = '#ff3838';
+    inputElement.style.borderWidth = '2px';
+    inputElement.style.backgroundColor = '#fff8f8';
+    inputElement.style.boxShadow = '0 0 0 2px rgba(255, 56, 56, 0.25)';
+}
+
+function removeAllErrors() {
+    const errorMessages = document.querySelectorAll('.error-message');
+    errorMessages.forEach(error => error.remove());
+    
+    const formInputs = document.querySelectorAll('#form input');
+    formInputs.forEach(input => {
+        input.style.borderColor = '';
+        input.style.borderWidth = '';
+        input.style.backgroundColor = '';
+        input.style.boxShadow = '';
+    });
+}
+
+function enhancedForm() {
+    const forms = document.querySelectorAll('form');
+
+    async function postData(url, data) {
+        const response = await fetch(url, {
+            method: 'POST',
+            body: data
+        });
+
+        return await response.json();
+    }
+
+    forms.forEach(form => {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            if (!validateForm()) {
+                const firstError = form.querySelector('.error-message');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                return;
+            }
+
+            const div = document.createElement('div');
+            div.textContent = 'loading...';
+            div.style.cssText = `
+                text-align: center;
+                font-size: 16px;
+            `;
+            const lastElement = form.lastElementChild;
+            lastElement.before(div);
+
+            const formData = new FormData(form);
+            postData('http://127.0.0.1:8000/app/items/', formData)
+                .then(() => {
+                    window.location.href = '/nextorderpage/';
+                })
+                .catch(() => {
+                    div.remove();
+                })
+                .finally(() => {
+                    setTimeout(() => {
+                        div.remove();
+                    }, 5000);
+                });
+        });
+    });
+}
+
+function addInputListeners() {
+    const formInputs = document.querySelectorAll('#form input');
+    formInputs.forEach(input => {
+        input.addEventListener('input', function() {
+            this.style.borderColor = '';
+            this.style.borderWidth = '';
+            this.style.backgroundColor = '';
+            this.style.boxShadow = '';
+            
+            const errorMessage = this.parentElement.querySelector('.error-message');
+            if (errorMessage) {
+                errorMessage.remove();
+            }
+        });
+    });
+}
+
+function addPhoneValidation() {
+    const phoneInput = document.getElementById('number');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '');
+            
+            if (this.value.length > 9) {
+                const formatted = `${this.value.slice(0, 3)}-${this.value.slice(3, 6)}-${this.value.slice(6, 9)}`;
+                if (this.value.length > 9) {
+                    this.value = formatted + this.value.slice(9);
+                } else {
+                    this.value = formatted;
+                }
+            }
+        });
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     modals();
     renderCards();
-    initCounter('.modal-body')
-    fillingForm()
-    form()
+    initCounter('.modal-body');
+    fillingForm();
+    enhancedForm();
+    addInputListeners();
+    addPhoneValidation();
 });
