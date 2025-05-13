@@ -78,7 +78,7 @@ class NextOrderPageView(View):
     """
     Сторінка з формою для оформлення замовлення
     """
-    template_name = 'next_order_page.html'
+    template_name = 'nextOrderPage.html'
 
     def post(self, request, *args, **kwargs):
         dish_id = request.POST.get('dish_id')

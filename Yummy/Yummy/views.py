@@ -1,22 +1,22 @@
 from django.shortcuts import render
 
 def index(request):
-    return render(request, 'Yummy/index.html')
+    return render(request, 'Yummy/../app/templates/index.html')
 
 def about(request):
-    return render(request, 'Yummy/about.html')
+    return render(request, 'Yummy/../app/templates/about.html')
 
 def dishes(request):
-    return render(request, 'Yummy/dishes.html')
+    return render(request, 'Yummy/../app/templates/dishes.html')
 
 def menu(request):
-    return render(request, 'Yummy/menu.html')
+    return render(request, 'Yummy/../app/templates/menu.html')
 
 def next_order_page(request):
-    return render(request, 'Yummy/nextOrderPage.html')
+    return render(request, 'Yummy/../app/templates/nextOrderPage.html')
 
 def order(request):
-    return render(request, 'Yummy/order.html')
+    return render(request, 'Yummy/../app/templates/order.html')
 
 def review(request):
-    return render(request, 'Yummy/review.html')
+    return render(request, 'Yummy/../app/templates/review.html')
