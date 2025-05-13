@@ -475,15 +475,6 @@ function removeAllErrors() {
 function enhancedForm() {
     const forms = document.querySelectorAll('form');
 
-    async function postData(url, data) {
-        const response = await fetch(url, {
-            method: 'POST',
-            body: data
-        });
-
-        return await response.json();
-    }
-
     forms.forEach(form => {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -505,19 +496,9 @@ function enhancedForm() {
             const lastElement = form.lastElementChild;
             lastElement.before(div);
 
-            const formData = new FormData(form);
-            postData('http://127.0.0.1:8000/app/items/', formData)
-                .then(() => {
-                    window.location.href = '/nextorderpage/';
-                })
-                .catch(() => {
-                    div.remove();
-                })
-                .finally(() => {
-                    setTimeout(() => {
-                        div.remove();
-                    }, 5000);
-                });
+            setTimeout(() => {
+                window.location.href = '/nextorderpage/';
+            }, 800);
         });
     });
 }
@@ -530,7 +511,7 @@ function addInputListeners() {
             this.style.borderWidth = '';
             this.style.backgroundColor = '';
             this.style.boxShadow = '';
-            
+
             const errorMessage = this.parentElement.querySelector('.error-message');
             if (errorMessage) {
                 errorMessage.remove();
@@ -544,7 +525,7 @@ function addPhoneValidation() {
     if (phoneInput) {
         phoneInput.addEventListener('input', function() {
             this.value = this.value.replace(/\D/g, '');
-            
+
             if (this.value.length > 9) {
                 const formatted = `${this.value.slice(0, 3)}-${this.value.slice(3, 6)}-${this.value.slice(6, 9)}`;
                 if (this.value.length > 9) {
@@ -557,12 +538,103 @@ function addPhoneValidation() {
     }
 }
 
+function saveFormDataToLocalStorage() {
+    const form = document.getElementById('form');
+    if (!form) return;
+
+    form.addEventListener('submit', (e) => {
+
+        const formData = {
+            firstName: document.getElementById('firstName').value,
+            number: document.getElementById('number').value,
+            orders: document.getElementById('orders').value,
+            additionalFood: document.getElementById('additionalFood').value,
+            numberOfOrders: document.getElementById('numberOfOrders').value,
+            date: document.getElementById('date').value,
+            address: document.getElementById('address').value,
+            message: document.getElementById('message').value
+        };
+
+        localStorage.setItem('orderFormData', JSON.stringify(formData));
+    });
+}
+
+
+function displaySavedFormData() {
+    const firstNameElement = document.querySelector('#first-name');
+    if (!firstNameElement) return;
+
+    const savedData = localStorage.getItem('orderFormData');
+    if (!savedData) return;
+
+    try {
+        const formData = JSON.parse(savedData);
+
+        document.getElementById('first-name').textContent = formData.firstName || '';
+        document.getElementById('number').textContent = formData.number || '';
+        document.getElementById('orders').textContent = formData.orders || '';
+        document.getElementById('additional').textContent = formData.additionalFood || '';
+        document.getElementById('number-of-orders').textContent = formData.numberOfOrders || '';
+        document.getElementById('date').textContent = formData.date ? new Date(formData.date).toLocaleString() : '';
+        document.getElementById('address').textContent = formData.address || '';
+        document.getElementById('message').textContent = formData.message || '';
+
+    } catch (error) {
+        console.error('Error parsing form data from local storage:', error);
+    }
+}
+
+function enhancedFormWithStorage() {
+    const forms = document.querySelectorAll('form');
+
+    forms.forEach(form => {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            if (!validateForm()) {
+                const firstError = form.querySelector('.error-message');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                return;
+            }
+
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                number: document.getElementById('number').value,
+                orders: document.getElementById('orders').value,
+                additionalFood: document.getElementById('additionalFood').value,
+                numberOfOrders: document.getElementById('numberOfOrders').value,
+                date: document.getElementById('date').value,
+                address: document.getElementById('address').value,
+                message: document.getElementById('message').value
+            };
+
+            localStorage.setItem('orderFormData', JSON.stringify(formData));
+
+            const div = document.createElement('div');
+            div.textContent = 'loading...';
+            div.style.cssText = `
+                text-align: center;
+                font-size: 16px;
+            `;
+            const lastElement = form.lastElementChild;
+            lastElement.before(div);
+
+            setTimeout(() => {
+                window.location.href = '/nextorderpage/';
+            }, 800);
+        });
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     modals();
     renderCards();
     initCounter('.modal-body');
     fillingForm();
-    enhancedForm();
+    enhancedFormWithStorage();
     addInputListeners();
     addPhoneValidation();
+    displaySavedFormData();
 });

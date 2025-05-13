@@ -214,13 +214,13 @@ with connection.cursor() as cursor:
 
         def test_next_order_page_view_get_redirect(self):
             """Тест перевіряє, що GET-запит перенаправляє на сторінку меню"""
-            response = self.client.get(reverse('next_order_page'))
+            response = self.client.get(reverse('nextOrderPage'))
             self.assertEqual(response.status_code, 302)
             self.assertEqual(response.url, reverse('menu'))
 
         def test_next_order_page_view_post(self):
             """Тест перевіряє, що POST-запит повертає сторінку з формою замовлення"""
-            response = self.client.post(reverse('next_order_page'), {'dish_id': self.dish.id})
+            response = self.client.post(reverse('nextOrderPage'), {'dish_id': self.dish.id})
 
             self.assertEqual(response.status_code, 200)
             self.assertTemplateUsed(response, 'nextOrderPage.html')
@@ -230,7 +230,7 @@ with connection.cursor() as cursor:
 
         def test_next_order_page_view_post_invalid_dish(self):
             """Тест перевіряє, що POST-запит з неіснуючим dish_id повертає 404"""
-            response = self.client.post(reverse('next_order_page'), {'dish_id': 999})  # Неіснуючий ID
+            response = self.client.post(reverse('nextorderpage'), {'dish_id': 999})  # Неіснуючий ID
             self.assertEqual(response.status_code, 404)
 
 
