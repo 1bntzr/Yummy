@@ -19,5 +19,5 @@ urlpatterns = [
     path('nextorderpage/', next_order_page, name='next_order_page'),
     path('order/', order ,name="order"),
     path('review/', review ,name="review"),
-    path('api/', include('api.urls')),
+    path('app/', include('app.urls')),
 ]
