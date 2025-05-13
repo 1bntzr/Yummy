@@ -27,7 +27,7 @@ urlpatterns = [
     path('about/', AboutView.as_view(), name='about'),
     path('dishes/', DishesListView.as_view(), name='dishes'),
     path('menu/', MenuListView.as_view(), name='menu'),
-    path('nextorderpage/', NextOrderPageView.as_view(), name='next_order_page'),
+    path('nextorderpage/', NextOrderPageView.as_view(), name='nextorderpage'),
     path('order/', OrderCreateView.as_view(), name='order'),
     path('review/', ReviewCreateView.as_view(), name='review')
 ]

@@ -1,13 +1,21 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework import viewsets
+from .models import Item
+from .serializers import ItemSerializer
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, TemplateView, FormView, CreateView
 from django.views import View
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse_lazy, reverse
 from .models import Dish, Order, Review
 from django.utils import timezone
 from django.contrib import messages
 from django.db.models import Avg
 
+class ItemViewSet(viewsets.ModelViewSet):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
 
 class IndexView(TemplateView):
     """
@@ -73,7 +81,7 @@ class MenuListView(ListView):
         context['title'] = 'Меню'
         return context
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class NextOrderPageView(View):
     """
     Сторінка з формою для оформлення замовлення
@@ -93,7 +101,27 @@ class NextOrderPageView(View):
     def get(self, request, *args, **kwargs):
         return redirect('menu')
 
+@method_decorator(csrf_exempt, name='dispatch')
+class NextOrderPageView(View):
+    """
+    Сторінка з формою для оформлення замовлення
+    """
+    template_name = 'nextOrderPage.html'
 
+    def post(self, request, *args, **kwargs):
+        dish_id = request.POST.get('dish_id')
+        dish = get_object_or_404(Dish, id=dish_id)
+
+        context = {
+            'dish': dish,
+            'title': 'Оформлення замовлення'
+        }
+        return render(request, self.template_name, context)
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'nextOrderPage.html')
+
+@method_decorator(csrf_exempt, name='dispatch')
 class OrderCreateView(View):
     """
     Обробка форми замовлення
@@ -124,15 +152,15 @@ class OrderCreateView(View):
             new_order.save()
 
             messages.success(request, 'Ваше замовлення успішно оформлено!')
-            return redirect('index')
+            return redirect('nextorderpage')
         except Exception as e:
             messages.error(request, f'Помилка при оформленні замовлення: {str(e)}')
-            return redirect('next_order_page')
+            return redirect('order')
 
     def get(self, request, *args, **kwargs):
-        return redirect('menu')
+        return render(request, 'order.html')
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class ReviewCreateView(View):
     """
     Обробка форми відгуку
