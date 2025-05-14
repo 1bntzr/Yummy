@@ -1,4 +1,5 @@
 from django.utils.decorators import method_decorator
+from django.utils.dateparse import parse_datetime
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets
 from .models import Item
@@ -6,7 +7,7 @@ from .serializers import ItemSerializer
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, TemplateView, FormView, CreateView
 from django.views import View
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.urls import reverse_lazy, reverse
 from .models import Dish, Order, Review
 from django.utils import timezone
@@ -126,19 +127,27 @@ class OrderCreateView(View):
     """
     Обробка форми замовлення
     """
-
     def post(self, request, *args, **kwargs):
-        dish_id = request.POST.get('dish_id')
-        customer_name = request.POST.get('customer_name')
-        phone_number = request.POST.get('phone_number')
-        order_item = request.POST.get('order_item')
-        quantity = request.POST.get('quantity')
-        delivery_datetime = request.POST.get('delivery_datetime')
-        address = request.POST.get('address')
-        message = request.POST.get('message', '')
+        """
+        Обробка форми замовлення.
+        """
+        if request.method == 'POST':
+            # Получение данных из формы
+            dish_id = request.POST.get('dish_id')
+            customer_name = request.POST.get('customer_name')
+            phone_number = request.POST.get('phone_number')
+            order_item = request.POST.get('order_item')
+            quantity = request.POST.get('quantity')
+            delivery_datetime_raw = request.POST.get('delivery_datetime')
+            address = request.POST.get('address')
+            message = request.POST.get('message', '')
 
         try:
             dish = get_object_or_404(Dish, id=dish_id)
+            delivery_datetime = parse_datetime(delivery_datetime_raw)
+            if delivery_datetime is None:
+                raise ValueError("Невірний формат дати!")
+
             new_order = Order(
                 customer_name=customer_name,
                 phone_number=phone_number,
@@ -151,14 +160,19 @@ class OrderCreateView(View):
             )
             new_order.save()
 
+
             messages.success(request, 'Ваше замовлення успішно оформлено!')
             return redirect('nextorderpage')
         except Exception as e:
+            import traceback
+            print("EXCEPTION:", e)
+            traceback.print_exc()
             messages.error(request, f'Помилка при оформленні замовлення: {str(e)}')
             return redirect('order')
 
     def get(self, request, *args, **kwargs):
-        return render(request, 'order.html')
+        dishes = Dish.objects.all()
+        return render(request, 'order.html', {'dishes': dishes})
 
 @method_decorator(csrf_exempt, name='dispatch')
 class ReviewCreateView(View):

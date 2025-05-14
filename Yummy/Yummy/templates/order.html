@@ -66,79 +66,62 @@
         <section class="order" id="order">
           <h1 class="heading">free and fast</h1>
 
-          <form action="" id="form">
-            <div class="inputBox">
-              <div class="input">
-                <span>your name</span>
-                <input
-                  type="text"
-                  placeholder="enter your name"
-                  id="firstName"
-                />
-              </div>
-              <div class="input">
-                <span>your number</span>
-                <input
-                  type="text"
-                  placeholder="enter your number"
-                  id="number"
-                />
-              </div>
-            </div>
+          <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="inputBox">
+          <div class="input">
+            <span>your name</span>
+            <input type="text" placeholder="enter your name" id="firstName" name="customer_name" required />
+          </div>
+          <div class="input">
+            <span>your number</span>
+            <input type="text" placeholder="enter your number" id="number" name="phone_number" required />
+          </div>
+        </div>
 
-            <div class="inputBox">
-              <div class="input">
-                <span>your order</span>
-                <input type="text" placeholder="enter food name" id="orders" />
+        <div class="inputBox">
+          <div class="input">
+            <span>your order</span>
+                <input type="text" placeholder="enter food name" id="orders" name="order_item" required />
               </div>
               <div class="input">
-                <span>additional food</span>
-                <input
-                  type="text"
-                  placeholder="extra with food"
-                  id="additionalFood"
-                />
-              </div>
+            <span>additional food</span>
+            <input type="text" placeholder="extra with food" id="additionalFood" name="additional_food" />
+          </div>
+          <div class="input">
+            <select name="dish_id" required>
+            <option value="" disabled selected>Choose dish</option>
+            {% for dish in dishes %}
+              <option value="{{ dish.id }}">{{ dish.name }}</option>
+            {% endfor %}
+        </select>
             </div>
+        </div>
 
-            <div class="inputBox">
-              <div class="input">
-                <span>how much</span>
-                <input
-                  type="number"
-                  placeholder="how many orders"
-                  id="numberOfOrders"
-                />
-              </div>
-              <div class="input">
-                <span>date and time</span>
-                <input type="datetime-local" id="date" />
-              </div>
-            </div>
+        <div class="inputBox">
+          <div class="input">
+            <span>how much</span>
+            <input type="number" placeholder="how many orders" id="numberOfOrders" name="quantity" required />
+          </div>
+          <div class="input">
+            <span>date and time</span>
+            <input type="datetime-local" id="date" name="delivery_datetime" required />
+          </div>
+        </div>
 
-            <div class="inputBox">
-              <div class="input">
-                <span>your address</span>
-                <input
-                  placeholder="enter your address"
-                  cols="30"
-                  rows="10"
-                  id="address"
-                />
-              </div>
-              <div class="input">
-                <span>your message</span>
-                <input
-                  placeholder="enter your message"
-                  cols="30"
-                  rows="10"
-                  id="message"
-                />
-              </div>
-            </div>
+        <div class="inputBox">
+          <div class="input">
+            <span>your address</span>
+            <input placeholder="enter your address" cols="30" rows="10" id="address" name="address" required />
+          </div>
+          <div class="input">
+            <span>your message</span>
+            <input placeholder="enter your message" cols="30" rows="10" id="message" name="message" />
+          </div>
+        </div>
 
-            <button type="submit" class="btns">Order now</button>
-          </form>
+        <button type="submit" class="btns">Order now</button>
+      </form>
         </section>
       </main>
       <footer class="footer">

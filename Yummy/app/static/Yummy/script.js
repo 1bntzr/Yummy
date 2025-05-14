@@ -354,16 +354,18 @@ function form() {
 
 
             const formData = new FormData(form)
-            postData('http://127.0.0.1:8000/app/items/', formData).then(() => {
-                window.location.href = '/nextorderpage/'
-            }).catch(() => {
-                div.textContent = message.fail
-                div.style.color = 'red'
-            }).finally(() => {
-                setTimeout(() => {
-                    div.remove()
-                }, 5000)
-            })
+            postData('http://127.0.0.1:8000/order/', formData).then((data) => {
+                // Обработка успешного ответа
+                if (data.status === 'success') {
+                    window.location.href = '/nextorderpage/';
+                } else {
+                    // Обработка ошибки
+                    alert('Error: ' + data.message);
+                }
+            }).catch((error) => {
+                // Ошибка отправки
+                alert('Error occurred while submitting form');
+            });
 
         })
 
@@ -637,4 +639,6 @@ document.addEventListener('DOMContentLoaded', () => {
     addInputListeners();
     addPhoneValidation();
     displaySavedFormData();
+    form();
 });
+
