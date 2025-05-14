@@ -359,12 +359,8 @@ function form() {
                 if (data.status === 'success') {
                     window.location.href = '/nextorderpage/';
                 } else {
-                    // Обработка ошибки
-                    alert('Error: ' + data.message);
                 }
             }).catch((error) => {
-                // Ошибка отправки
-                alert('Error occurred while submitting form');
             });
 
         })
